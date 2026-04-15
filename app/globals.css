@@ -1,26 +1,81 @@
 @import "tailwindcss";
-
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+    --green: #00ff41;
+    --green-dim: #00aa2a;
+    --green-dark: #003310;
+    --bg: #000000;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+    --color-background: var(--bg);
+    --color-foreground: var(--green);
+    --font-sans: var(--font-vt323);
+    --font-mono: var(--font-vt323);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+    box-sizing: border-box;
 }
 
+html,
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+    background: var(--bg);
+    color: var(--green);
+    font-family: var(--font-vt323), monospace;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    letter-spacing: 0.05em;
+}
+
+
+/* scanline overlay on any element with .scanlines */
+
+.scanlines::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient( to bottom, transparent 0px, transparent 2px, rgba(0, 0, 0, 0.15) 2px, rgba(0, 0, 0, 0.15) 4px);
+    pointer-events: none;
+    z-index: 10;
+}
+
+
+/* thermal thumbnail filter via CSS */
+
+.thermal-thumb {
+    filter: sepia(1) saturate(4) hue-rotate(180deg) brightness(1.2);
+}
+
+
+/* blinking cursor */
+
+@keyframes blink {
+    0%,
+    100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
+}
+
+.cursor {
+    display: inline-block;
+    animation: blink 1s step-end infinite;
+}
+
+
+/* green border box — reusable */
+
+.hud-box {
+    border: 1px solid var(--green);
+    padding: 0.75rem 1rem;
+}
+
+
+/* secondary text */
+
+.dim {
+    color: var(--green-dim);
 }
